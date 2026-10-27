@@ -1,0 +1,52 @@
+# =====================================
+# Environment variables and credentials
+# =====================================
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.json
+credentials.json
+
+# =====================================
+# Python cache and virtual environments
+# =====================================
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+
+# =====================================
+# Jupyter Notebook
+# =====================================
+.ipynb_checkpoints/
+
+# =====================================
+# Generated reports and datasets
+# =====================================
+*.xlsx
+*.xls
+*.csv
+!datos_ejemplo.csv
+reportes/
+outputs/
+
+# =====================================
+# Logs and temporary files
+# =====================================
+*.log
+*.tmp
+*.bak
+.cache/
+.pytest_cache/
+
+# =====================================
+# IDE and operating system
+# =====================================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
