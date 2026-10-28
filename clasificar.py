@@ -62,3 +62,23 @@ alertas.loc[alertas["LoginAttempts"] >=3, "Motivo"] = "Tres o mas intentos de ac
 
 print("Alertas por avisar: ", len(alertas))
 
+### Reportes: exportación de indicadores y resultados a un libro de Excel.
+
+resumen = pd.DataFrame({"Indicador": ["Filas originales", "Transacciones validas", "Filas descartadas", "Monto total procesado", "Monto promedio", "Operaciones por revisar"],
+                        "Valor": [total_original, len(datos), total_original-len(datos), datos["TransactionAmount"].sum(), round(datos["TransactionAmount"].mean(),2), len(alertas)]})
+
+with pd.ExcelWriter("reporte_bancario.xlsx", engine="openpyxl") as excel:
+    #Indicadores principales
+    resumen.to_excel(excel, sheet_name="Resumen", index=False)
+    #Hoja de totales por tipo de movimiento
+    por_tipo.to_excel(excel, sheet_name="Por tipo", index=False)
+    #Hoja de totales por canal
+    por_canal.to_excel(excel, sheet_name="Por canal", index=False)
+    #Hoja de totales por mes
+    por_mes.to_excel(excel, sheet_name="Por mes", index=False)
+    #Hoja de alertas
+    alertas.to_excel(excel, sheet_name="Alertas", index=False)
+    #Datos limpios
+    datos.to_excel(excel, sheet_name="Transacciones", index=False)
+
+print("Reporte de excel creado")
