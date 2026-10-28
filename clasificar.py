@@ -34,3 +34,31 @@ print(len(datos), "Filas descartadas", total_original-len(datos))
 
 
 
+#Contar y sumar los importes segun debito y credito
+
+por_tipo = datos.groupby("TransactionType")["TransactionAmount"].agg(["count", "sum"]).reset_index()
+
+por_tipo.columns = ["Tipo", "Cantidad", "Monto total"]
+
+por_canal = datos.groupby("Channel")["TransactionAmount"].agg(["count", "sum"]).reset_index()
+
+por_canal.columns = ["Canal", "Cantidad", "Monto total"]
+
+por_mes = datos.groupby("Mes")["TransactionAmount"].sum().reset_index()
+
+por_mes.columns = ["Mes", "Monto total"]
+
+#### selección de movimientos superiores a US$5,000 o con 3 o más intentos de acceso.
+
+monto_alto = datos["TransactionAmount"]>5000
+
+muchos_intentos = datos["LoginAttempts"]>=3
+
+alertas = datos[monto_alto | muchos_intentos].copy()
+
+alertas["Motivo"] = "Monto mayor a 5000"
+
+alertas.loc[alertas["LoginAttempts"] >=3, "Motivo"] = "Tres o mas intentos de acceso"
+
+print("Alertas por avisar: ", len(alertas))
+
